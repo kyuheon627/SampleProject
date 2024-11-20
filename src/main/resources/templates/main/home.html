@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/basic}">
+<head>
+  <meta charset="UTF-8">
+  <title th:text="#{title}">홈</title>
+  <link rel="stylesheet" href="/css/homeStyle.css"> <!-- homeStyle.css 연결 -->
+</head>
+<div layout:fragment="content">
+  <h2>상품 목록</h2>
+
+  <!-- 검색창 -->
+  <form th:action="@{/search}" method="get" class="search-form">
+    <input type="text" name="query" placeholder="검색어를 입력하세요" />
+    <button type="submit">검색</button>
+  </form>
+
+  <!-- 분류 검색 항목 -->
+  <div class="category-grid">
+    <a href="/category/food" class="category-item">
+      <img src="/images/food.jpg" alt="식품">
+      <span>식품</span>
+    </a>
+    <a href="/category/drinks" class="category-item">
+      <img src="/images/drinks.jpg" alt="음료">
+      <span>음료</span>
+    </a>
+    <a href="/category/snacks" class="category-item">
+      <img src="/images/snacks.jpg" alt="과자">
+      <span>과자</span>
+    </a>
+    <a href="/category/icecream" class="category-item">
+      <img src="/images/icecream.jpg" alt="아이스크림">
+      <span>아이스크림</span>
+    </a>
+    <a href="/category/alcohol" class="category-item">
+      <img src="/images/alcohol.jpg" alt="주류">
+      <span>주류</span>
+    </a>
+    <a href="/category/daily" class="category-item">
+      <img src="/images/daily.jpg" alt="생활용품">
+      <span>생활용품</span>
+    </a>
+  </div>
+
+  <!-- 공지사항 -->
+  <div class="main-page-notice">
+    <h3>
+      <a href="/notice">공지사항</a>
+    </h3>
+    <div class="main-page-split"></div>
+    <table>
+      <tr th:each="notice : ${list}">
+        <td><a th:href="@{/detail(seq=${notice.seq})}">[[${notice.title}]]</a></td>
+        <td th:text="${#temporals.format(notice.regdate, 'yyyy.MM.dd')}"></td>
+      </tr>
+    </table>
+  </div>
+
+</div>
+<script src="/js/homeScript.js"></script> <!-- home.js 연결 -->
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/basic}">
+<head>
+  <meta charset="UTF-8">
+  <title>공지사항 상세</title>
+  <link rel="stylesheet" href="/css/noticeStyle.css"> <!-- noticeStyle.css 연결 -->
+</head>
+
+<div layout:fragment="content">
+  <div class="notice-detail-container">
+
+    <!-- 게시판 스타일 테이블 -->
+    <div class="notice-board-table">
+      <table>
+        <tr>
+          <th>글 번호</th>
+          <td th:text="${notice.notice_id}">1</td> <!-- 글 번호 -->
+          <th>작성자</th>
+          <td th:text="${notice.notice_writer}">작성자</td> <!-- 작성자 -->
+        </tr>
+        <tr>
+          <th>작성일자</th>
+          <td th:text="${#temporals.format(notice.notice_regdate, 'yyyy.MM.dd')}">작성일자</td> <!-- 작성일자 -->
+          <th>조회수</th>
+          <td th:text="${notice.hitCnt}">0</td> <!-- 조회수 -->
+        </tr>
+        <tr>
+          <th>제목</th>
+          <td colspan="3" th:text="${notice.notice_title}">공지사항 제목</td> <!-- 공지사항 제목 -->
+        </tr>
+        <tr>
+          <th>내용</th>
+          <td colspan="3" th:text="${notice.notice_content}">공지사항 내용이 여기에 표시됩니다.</td> <!-- 공지사항 내용 -->
+        </tr>
+      </table>
+    </div>
+
+    <!-- 관리자 전용 버튼 (수정 및 삭제) -->
+    <div class="notice-actions" th:if="${role == 'admin'}">
+      <a th:href="@{/notice/edit(id=${notice.notice_id})}" class="edit-notice-btn">수정</a>
+      <a th:href="@{/notice/delete(id=${notice.notice_id})}" class="delete-notice-btn" onclick="return confirm('정말 삭제하시겠습니까?');">삭제</a>
+    </div>
+
+    <!-- 목록으로 돌아가기 버튼 -->
+    <div class="back-to-list">
+      <a href="/notice" class="back-btn">목록으로 돌아가기</a>
+    </div>
+  </div>
+</div>
+
+<script src="/js/noticeScript.js"></script> <!-- noticeScript.js 연결 -->
+</html>

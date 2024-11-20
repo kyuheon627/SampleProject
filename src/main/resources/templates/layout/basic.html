@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${pageTitle}">Page Title</title>
+    <link rel="stylesheet" href="/css/mainStyle.css">
+</head>
+<body>
+
+<!-- Navigation Bar -->
+<div class="navbar">
+    <div class="logo">편Easy</div>
+    <ul class="menu">
+        <li><a href="/" th:classappend="${#httpServletRequest.requestURI == '/home'} ? 'active'">홈</a></li>
+        <li><a href="/about" th:classappend="${#httpServletRequest.requestURI == '/about'} ? 'active'">검색</a></li>
+        <li><a href="/contact" th:classappend="${#httpServletRequest.requestURI == '/contact'} ? 'active'">커뮤니티</a></li>
+        <li><a href="/notice" th:classappend="${#httpServletRequest.requestURI == '/notice'} ? 'active'">공지사항</a></li>
+        <li><a href="/services" th:classappend="${#httpServletRequest.requestURI == '/services'} ? 'active'">고객센터</a></li>
+    </ul>
+
+    <!-- 로그인 상태에 따른 버튼 표시 -->
+    <div class="auth-container">
+        <div th:if="${session.authInfo == null}" class="login-button">
+            <a href="/login">Login</a>
+        </div>
+        <div th:if="${session.authInfo != null}" class="user-info">
+            <span class="username" th:text="${session.authInfo.name}">회원 이름</span> |
+            <a href="/logout" class="logout-button">Logout</a>
+            <!-- 드롭다운 메뉴 -->
+            <div class="dropdown-menu">
+                <a href="/mypage">내 정보</a>
+                <a href="/cart">장바구니</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Content Section -->
+<div class="content-container">
+    <div class="content" layout:fragment="content">
+        <!-- 페이지별 콘텐츠가 여기에 삽입됩니다 -->
+    </div>
+</div>
+
+<script src="/js/mainScript.js"></script>
+</body>
+</html>

@@ -1,0 +1,208 @@
+:root {
+    --main-color: #f9a825; /* 메인 색상 */
+    --text-color: #333;
+    --button-color: #ff6347;
+    --button-hover-color: #ff4500;
+}
+
+/* Reset styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f9;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+/* Container */
+.login-container, .signup-container {
+    background-color: white;
+    width: 100%; /* 화면 너비에 맞추기 */
+    max-width: 400px; /* 최대 너비를 400px로 제한하여 일정한 크기로 설정 */
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.15);
+    text-align: center;
+    margin: 0 auto; /* 가로 중앙 정렬 */
+}
+
+/* Heading */
+.login-container h2 {
+    margin-bottom: 20px;
+    color: var(--text-color);
+    font-size: 28px;
+}
+
+/* Input Group */
+.input-group {
+    margin-bottom: 25px;
+    text-align: left;
+}
+
+.input-group label {
+    font-size: 16px;
+    color: var(--text-color);
+}
+
+.input-group input {
+    width: 100%;
+    padding: 14px;
+    margin-top: 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 18px;
+}
+
+.input-group input:focus {
+    border-color: var(--main-color);
+    outline: none;
+    box-shadow: 0px 0px 5px rgba(249, 168, 37, 0.5);
+}
+
+/* Error Message */
+.error-message {
+    color: #e74c3c;
+    font-size: 14px;
+    margin-top: 5px;
+}
+
+/* Login Button */
+.login-btn {
+    width: 100%;
+    padding: 14px;
+    font-size: 18px;
+    background-color: var(--main-color);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.login-btn:hover {
+    background-color: #d4a117;
+}
+
+/* 로그인 페이지의 회원가입 버튼 */
+.login-signup-btn {
+    display: inline-block;
+    width: 100%;
+    padding: 12px;
+    font-size: 18px;
+    color: var(--main-color);
+    background-color: white;
+    border: 2px solid var(--main-color);
+    border-radius: 6px;
+    margin-top: 15px;
+    text-decoration: none;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.login-signup-btn:hover {
+    background-color: var(--main-color);
+    color: white;
+}
+
+/* 회원가입 폼의 제출 버튼 */
+.signup-submit-btn {
+    width: 100%;
+    padding: 14px;
+    font-size: 18px;
+    background-color: var(--main-color);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.signup-submit-btn:hover {
+    background-color: #d4a117;
+}
+
+
+/* 아이디/비밀번호 찾기 링크 */
+.find-account {
+    margin-top: 15px;
+    font-size: 14px;
+}
+
+.find-account a {
+    color: var(--main-color);
+    text-decoration: none;
+}
+
+.find-account a:hover {
+    text-decoration: underline;
+}
+
+/* Remember Email Checkbox Styling */
+.checkbox-container {
+    display: flex;
+    align-items: center; /* 체크박스와 텍스트 수직 중앙 정렬 */
+    justify-content: center; /* 수평 중앙 정렬 */
+    margin-top: -10px;
+    font-size: 16px;
+    color: var(--text-color);
+}
+
+.checkbox-container input[type="checkbox"] {
+    appearance: none;
+    width: 18px;
+    height: 18px;
+    margin-right: 5px;
+    border: 2px solid var(--main-color);
+    border-radius: 4px;
+    background-color: white;
+    cursor: pointer;
+    transition: background-color 0.3s, border-color 0.3s;
+    transform: translateY(3px); /* 텍스트와 높이를 맞추기 위한 조정 */
+}
+
+.checkbox-container input[type="checkbox"]:checked {
+    background-color: var(--main-color);
+    border-color: var(--main-color);
+}
+
+.checkbox-container input[type="checkbox"]:checked::before {
+    content: "✔";
+    color: white;
+    font-size: 14px;
+    position: absolute;
+    left: 3px;
+    top: 1px;
+    transform: translate(-10%,-20%);
+}
+
+/* Error Message Styling */
+.error-message {
+    color: #e74c3c;
+    background-color: rgba(231, 76, 60, 0.1);
+    font-size: 14px;
+    padding: 8px 10px;
+    margin-top: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #e74c3c;
+    border-radius: 6px;
+    text-align: left;
+    line-height: 1.5;
+    box-sizing: border-box;
+}
+
+.error-empty {
+    color: #e74c3c;
+    font-size: 14px;
+    padding: 8px;
+    border-radius: 6px;
+    text-align: left;
+    line-height: 1.5;
+    box-sizing: border-box;
+}

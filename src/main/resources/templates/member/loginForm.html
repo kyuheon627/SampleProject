@@ -1,0 +1,55 @@
+  <!DOCTYPE html>
+  <html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/basic}">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="#{login.title}">Login</title>
+    <link rel="stylesheet" href="/css/loginFormStyle.css">
+  </head>
+
+  <div layout:fragment="content">
+    <div class="login-container">
+      <h2 th:text="#{login.heading}">Login</h2>
+
+      <form th:action="@{/login}" method="post" th:object="${loginCommand}">
+
+        <!-- 로그인 실패 시 오류 메시지 표시 -->
+        <div th:if="${#fields.hasGlobalErrors()}" class="error-message">
+          <p th:each="err : ${#fields.globalErrors()}" th:text="${err}"></p>
+        </div>
+
+        <div class="input-group">
+          <label for="email" th:text="#{login.email}">Email</label>
+          <input type="text" id="email" th:field="*{email}">
+          <!-- 이메일 필드에 오류 메시지 표시 -->
+          <div th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="error-empty"></div>
+        </div>
+
+        <div class="input-group">
+          <label for="password" th:text="#{login.password}">Password</label>
+          <input type="password" id="password" th:field="*{password}">
+          <!-- 비밀번호 필드에 오류 메시지 표시 -->
+          <div th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="error-empty"></div>
+        </div>
+
+        <div class="checkbox-container">
+          <label>
+            <input type="checkbox" th:field="*{rememberEmail}">
+            <span th:text="#{rememberEmail}">Remember Email</span>
+          </label>
+        </div>
+        <br>
+
+        <button type="submit" class="login-btn" th:text="#{login.button}">Login</button>
+      </form>
+
+      <!-- 회원가입 버튼 (클래스명 변경) -->
+      <a href="/signup" class="login-signup-btn" th:text="#{login.signup.button}">Sign up</a>
+
+      <!-- 아이디/비밀번호 찾기 링크 -->
+      <p class="find-account">
+        <a href="/find-account" th:text="#{login.find.account}">아이디/비밀번호 찾기</a>
+      </p>
+    </div>
+  </div>
+  </html>

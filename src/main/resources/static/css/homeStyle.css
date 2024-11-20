@@ -1,0 +1,63 @@
+/* 검색창 스타일 */
+.search-form {
+    margin-top: 20px;
+}
+
+.search-form input[type="text"] {
+    padding: 8px;
+    width: 400px;
+}
+
+.search-form button {
+    padding: 8px 12px;
+    background-color: #f9a825;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.search-form button:hover {
+    background-color: #ff6347;
+}
+
+/* 분류 검색 항목 스타일 */
+.category-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 3열 */
+    grid-gap: 10px;
+    margin-top: 20px;
+}
+
+.category-item {
+    position: relative;
+    cursor: pointer;
+    overflow: hidden;
+    border-radius: 8px;
+    border: 2px solid #ccc; /* 테두리 추가 */
+}
+
+.category-item:hover {
+    border-color: var(--main-color); /* 호버 시 테두리 색 변경 */
+}
+
+.category-item img {
+    width: auto; /* 가로 너비는 자동으로 맞추기 */
+    height: 150px; /* 높이를 30px로 고정 */
+    object-fit: contain; /* 원본 비율 유지 */
+}
+
+.category-item span {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    background: rgba(0, 0, 0, 0.5);
+    padding: 5px 0;
+}
+
+/*공지사항*/
