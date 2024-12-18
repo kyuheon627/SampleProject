@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/basic}">
+<head>
+  <meta charset="UTF-8">
+  <title>게시글 상세</title>
+  <link rel="stylesheet" href="/css/noticeStyle.css"> <!-- 기존 noticeStyle.css 사용 -->
+</head>
+
+<div layout:fragment="content">
+  <div class="notice-detail-container">
+    <h1>게시글</h1>
+    <hr style="border: 1px solid #a6a6a6; margin-top: 10px; margin-bottom: 20px;">
+
+    <!-- 게시판 스타일 테이블 -->
+    <div class="notice-board-table">
+      <table>
+        <tr>
+          <th>제목</th>
+          <td colspan="5" th:text="${board.board_title}">게시글 제목</td> <!-- 게시글 제목 -->
+        </tr>
+        <tr>
+          <th>작성자</th>
+          <td th:text="${board.board_writer}">작성자</td> <!-- 작성자 -->
+          <th>작성일</th>
+          <td th:text="${#temporals.format(board.board_created, 'yyyy.MM.dd')}">작성일</td> <!-- 작성일자 -->
+          <th>조회수</th>
+          <td th:text="${board.hitcnt}">0</td> <!-- 조회수 -->
+        </tr>
+        <tr>
+          <th colspan="6">내용</th>
+        </tr>
+        <tr>
+          <td colspan="6" th:text="${board.board_content}" class="notice-board-table-content">게시글 내용이 여기에 표시됩니다.</td> <!-- 게시글 내용 -->
+        </tr>
+      </table>
+    </div>
+
+    <!-- 목록으로 돌아가기 버튼 -->
+    <div class="back-to-list">
+      <a href="/board" class="back-btn">목록으로 돌아가기</a>
+    </div>
+
+    <!-- 작성자 확인 (수정 및 삭제) -->
+    <div class="notice-actions" th:if="${name == board.board_writer}">
+      <a th:href="@{/board/edit(id=${board.board_id})}" class="edit-notice-btn">수정</a>
+      <a th:href="@{/board/delete(id=${board.board_id})}" class="delete-notice-btn" onclick="return confirm('정말 삭제하시겠습니까?');">삭제</a>
+    </div>
+
+  </div>
+
+  <div class="comments-section">
+    <h2 th:text="${#lists.size(comments)} + '개의 댓글'">댓글</h2>
+
+    <hr style="border: 1px solid #a6a6a6; margin-top: 10px; margin-bottom: 20px;">
+    <!-- 댓글 목록 -->
+    <div class="comments-list">
+      <ul>
+        <li th:each="comment : ${comments}">
+          <div class="comment-meta">
+            <strong th:text="${comment.comment_writer}">작성자</strong>
+            <span th:text="${#temporals.format(comment.comment_created, 'yyyy.MM.dd HH:mm')}">작성일</span>
+          </div>
+          <div class="comment-content" th:text="${comment.comment_content}">댓글 내용</div>
+        </li>
+      </ul>
+    </div>
+
+    <!-- 댓글 작성 -->
+    <form th:action="@{/board/{boardId}/comment(boardId=${board.board_id})}" method="post" class="comment-form">
+      <textarea name="comment_content" placeholder="댓글을 입력하세요..." required></textarea>
+      <button type="submit">댓글 작성</button>
+    </form>
+  </div>
+
+</div>
+
+<script src="/js/noticeScript.js"></script> <!-- 기존 noticeScript.js 사용 -->
+</html>

@@ -11,28 +11,37 @@
     <div class="signup-container">
         <h2 th:text="#{signup.heading}">Sign Up</h2>
         <form th:action="@{/signup}" method="post" th:object="${signupCommand}">
+
             <div class="input-group">
                 <label for="name" th:text="#{signup.name}">Name</label>
                 <input type="text" id="name" th:field="*{name}">
-                <div th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="error-empty"></div>
+                <div th:if="${#fields.hasErrors('name')}" class="error-empty">
+                    <span th:errors="*{name}"></span>
+                </div>
             </div>
 
             <div class="input-group">
                 <label for="email" th:text="#{signup.email}">Email</label>
                 <input type="email" id="email" th:field="*{email}">
-                <div th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="error-empty"></div>
+                <div th:if="${#fields.hasErrors('email')}" class="error-empty">
+                    <span th:errors="*{email}"></span>
+                </div>
             </div>
 
             <div class="input-group">
                 <label for="password" th:text="#{signup.password}">Password</label>
                 <input type="password" id="password" th:field="*{password}">
-                <div th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="error-empty"></div>
+                <div th:if="${#fields.hasErrors('password')}" class="error-empty">
+                    <span th:errors="*{password}"></span>
+                </div>
             </div>
 
             <div class="input-group">
                 <label for="confirmPassword" th:text="#{signup.confirmPassword}">Confirm Password</label>
                 <input type="password" id="confirmPassword" th:field="*{confirmPassword}">
-                <div th:if="${#fields.hasErrors('confirmPassword')}" th:errors="*{confirmPassword}" class="error-empty  "></div>
+                <div th:if="${#fields.hasErrors('confirmPassword')}" class="error-empty">
+                    <span th:errors="*{confirmPassword}"></span>
+                </div>
             </div>
 
             <button type="submit" class="signup-submit-btn" th:text="#{signup.button}">Sign Up</button>

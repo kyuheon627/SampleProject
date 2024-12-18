@@ -22,18 +22,28 @@ public class SignupController {
     }
 
     @PostMapping("/signup")
-    public String handleStep3(SignupCommand regReq, Errors errors) {
+    public String SignupSuccess(SignupCommand regReq, Errors errors) {
+        // 입력 값 검증
         new RegisterRequestValidator().validate(regReq, errors);
-        if (errors.hasErrors())
+
+        // 에러가 존재하면 폼으로 다시 이동
+        if (errors.hasErrors()) {
             return "/member/signupForm";
+        }
 
         try {
+            // 회원 등록 로직 실행
             memberRegisterService.regist(regReq);
             return "redirect:/";
         } catch (DuplicateMemberException ex) {
-            errors.rejectValue("email", "duplicate");
+            if (ex.getMessage().contains("이메일")) {
+                errors.rejectValue("email", "duplicate", "이미 사용 중인 이메일입니다.");
+            } else if (ex.getMessage().contains("이름")) {
+                errors.rejectValue("name", "duplicate", "이미 사용 중인 이름입니다.");
+            }
             return "/member/signupForm";
         }
     }
+
 
 }

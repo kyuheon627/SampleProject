@@ -1,0 +1,258 @@
+/* 전체 컨테이너 */
+.search-results-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    font-family: 'Arial', sans-serif;
+}
+
+/* 서브 네비게이션 스타일 */
+.sub-navbar {
+    background-color: #ffffff;
+    border-bottom: 1px solid #ddd; /* 아래 테두리 */
+    padding: 20px 10px;
+    max-width: 95%; /* 최대 가로 길이 제한 */
+    margin: -20px auto 0 auto; /* 중앙 정렬 */
+}
+
+/* 서브 네비게이션 간 구분선 */
+.sub-navbar + .sub-navbar {
+    margin-top: 10px; /* 위쪽 여백 */
+    padding-top: 10px; /* 안쪽 여백 */
+}
+
+.sub-nav-list {
+    display: flex;
+    justify-content: left;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    gap: 15px;
+}
+
+.sub-nav-list li {
+    display: inline-block;
+}
+
+.sub-nav-list li a {
+    text-decoration: none;
+    color: #999; /* 기본 글자색: 연한 회색 */
+    padding: 8px 15px;
+    border-radius: 20px;
+    transition: background-color 0.3s, color 0.3s;
+    font-weight: bold;
+}
+
+.sub-nav-list li a:hover {
+    color: #333; /* hover 글자색: 진한 회색 */
+}
+
+.sub-nav-list li.active a,
+.sub-nav-list li a#subnav-active {
+    color: #f9a825; /* 활성 상태 글자색: 밝은 노란색 */
+    border: 1px solid #f9a825; /* 강조를 위한 테두리 */
+    font-weight: bold;
+}
+
+/* 검색창 스타일 */
+.search-bar-container {
+    margin: 20px auto;
+    text-align: center;
+}
+
+.search-bar-container form {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.search-input {
+    width: 600px;
+    padding: 10px 15px;
+    border: 2px solid #f9a825; /* 테두리 색상 */
+    border-radius: 30px; /* 둥근 모서리 */
+    font-size: 16px;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.search-input:focus {
+    border-color: #f9a825;
+    box-shadow: 0 0 10px rgba(249, 168, 37, 0.5); /* 테두리 강조 효과 */
+    outline: none;
+}
+
+.search-button {
+    padding: 10px 20px;
+    background-color: #f9a825; /* 버튼 색상 */
+    color: #fff;
+    border: none;
+    border-radius: 30px; /* 둥근 모서리 */
+    font-size: 16px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s, box-shadow 0.3s;
+}
+
+.search-button:hover {
+    background-color: #d79520; /* 호버 시 조금 어두운 색 */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* 버튼 그림자 */
+}
+
+/* 제목 스타일 */
+.search-title {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 20px;
+    text-align: center;
+    color: #333;
+}
+
+/* 상품 그리드 */
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    padding: 20px 0;
+}
+
+/* 상품 카드 */
+.product-card {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    text-align: center;
+    text-decoration: none; /* 밑줄 제거 */
+    color: inherit; /* 링크 색상 상속 */
+    transition: transform 0.3s, box-shadow 0.3s;
+    width: 250px; /* 고정된 너비 */
+    height: 330px; /* 고정된 높이 */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* 기본 행사 정보 스타일 */
+.product-event {
+    font-size: 1rem;
+    font-weight: bold;
+    padding: 5px 10px;
+    border-radius: 20px;
+    display: inline-block;
+    margin-bottom: 10px;
+    text-align: center;
+    text-transform: uppercase;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* 1+1 행사 스타일 */
+.product-event.one-plus-one {
+    color: #FF4D4D; /* 눈에 띄는 붉은색 텍스트 */
+    background-color: #FEECEC; /* 연한 붉은색 배경 */
+    box-shadow: 0 2px 4px rgba(255, 0, 0, 0.2); /* 약간의 붉은 그림자 */
+}
+
+/* 2+1 행사 스타일 */
+.product-event.two-plus-one {
+    color: #007BFF; /* 눈에 띄는 파란색 */
+    background-color: #E8F0FE; /* 연한 파란색 배경 */
+    box-shadow: 0 2px 4px rgba(0, 128, 0, 0.2);
+}
+
+/* 상품 이미지 */
+.product-image {
+    width: 100%; /* 카드의 너비에 맞게 조정 */
+    height: 120px; /* 고정된 높이 */
+    object-fit: contain; /* 이미지 비율 유지하며 카드 크기에 맞춤 */
+    border-radius: 8px;
+}
+
+/* 상품명 */
+.product-name {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #222;
+    margin-bottom: 10px;
+}
+
+/* 상품 가격 */
+.product-price {
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: #f04f24;
+    margin-bottom: 5px;
+}
+
+/* 결과 없음 */
+.no-results {
+    font-size: 1.2rem;
+    color: #999;
+    text-align: center;
+    margin-top: 50px;
+}
+
+/* 페이지 네비게이션 */
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    list-style: none;
+    padding: 0;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+/* 페이지 번호 아이템 */
+.page-item {
+    margin: 0 5px; /* 간격 조정 */
+}
+
+/* 페이지 번호 링크 */
+.page-link {
+    display: inline-block;
+    padding: 8px 14px;
+    color: var(--main-color); /* 메인 색상 */
+    text-decoration: none;
+    border: 1px solid #ddd; /* 테두리 */
+    border-radius: 4px; /* 모서리 둥글게 */
+    transition: background-color 0.3s, color 0.3s; /* 부드러운 효과 */
+}
+
+/* 현재 활성화된 페이지 */
+.page-item.active .page-link {
+    background-color: var(--main-color); /* 메인 색상 */
+    color: #fff; /* 텍스트 흰색 */
+    border-color: var(--main-color); /* 테두리 메인 색상 */
+}
+
+/* 비활성화된 페이지 (처음/이전/다음/마지막) */
+.page-item.disabled .page-link {
+    color: #bbb; /* 회색 비활성화 */
+    background-color: #f0f0f0; /* 배경색 연하게 */
+    border-color: #ddd; /* 테두리 색상 */
+}
+
+/* 페이지 링크 호버 효과 */
+.page-link:hover:not(.disabled):not(.active) {
+    background-color: #f0f0f0; /* 연한 배경 */
+    color: var(--main-color); /* 메인 색상 */
+    border-color: var(--main-color); /* 테두리 메인 색상 */
+}
+
+/* 이전/다음 버튼 스타일 */
+.page-item a.page-link {
+    font-size: 1rem;
+}
+
+/* 전체적인 페이징 버튼 크기 조정 */
+.pagination .page-link {
+    min-width: 40px;
+    text-align: center;
+}

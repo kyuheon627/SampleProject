@@ -24,7 +24,7 @@ public class Members {
     @Column(nullable = false, unique = true)
     private String email;
 
-    @Column
+    @Column(nullable = false, unique = true)
     private String name;
 
     @Column(nullable = false)

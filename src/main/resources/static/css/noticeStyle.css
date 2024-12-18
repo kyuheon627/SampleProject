@@ -15,6 +15,7 @@
     color: var(--main-color);
     font-size: 1.8rem;
     margin-bottom: 1.5rem;
+    margin-top: -2px;
 }
 
 /* 공지사항 테이블 스타일 */
@@ -32,9 +33,11 @@
 .notice-table th {
     background-color: #f1f1f1;
     color: var(--text-color);
+    text-align: center;
     font-weight: bold;
 }
 
+/* 제목 및 댓글 개수 링크 스타일 */
 .notice-table td a {
     color: var(--main-color);
     text-decoration: none;
@@ -42,6 +45,16 @@
 
 .notice-table td a:hover {
     text-decoration: underline;
+}
+
+/* 제목 및 댓글 스타일 */
+.notice-table td a span:first-child {
+    display: inline-block;
+    max-width: 450px; /* 제목의 최대 너비 (필요에 따라 조정) */
+    white-space: nowrap; /* 한 줄로 표시 */
+    overflow: hidden; /* 넘치는 텍스트 숨김 */
+    text-overflow: ellipsis; /* "..."으로 표시 */
+    vertical-align: middle; /* 텍스트 정렬 */
 }
 
 /* 작성 버튼 스타일 */
@@ -114,12 +127,21 @@
 /* ---------------Detail-------------------- */
 /* 공지사항 상세 컨테이너 */
 .notice-detail-container {
-    max-width: 800px;
+    max-width: 900px;
     margin: 0 auto;
     padding: 20px;
     background-color: #fff;
     border-radius: 8px;
     box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* h1 태그 왼쪽 정렬 */
+.notice-detail-container h1 {
+    text-align: left;
+    font-size: 2rem;
+    margin-bottom: 10px;
+    margin-left: 40px;
+    color: #333;
 }
 
 /* 게시판 스타일 테이블 */
@@ -136,23 +158,41 @@
     vertical-align: top;
 }
 
+/* th 가운데 정렬 */
 .notice-board-table th {
     background-color: #f9f9f9;
     font-weight: bold;
-    text-align: left;
-    width: 15%; /* 전체 테이블에서 차지하는 비율 설정 */
+    text-align: center; /* 가운데 정렬 */
+    width: 10%;
     color: #555;
+}
+
+.notice-board-table td[colspan="5"] {
+    text-align: left; /* 내용은 왼쪽 정렬 */
+    color: #333;
+    font-size: 18px;
+    padding: 10px 20px; /* 위아래 10px, 좌우 15px 공백 */
+}
+
+/* 내용에 대한 colspan 조정 */
+.notice-board-table td[colspan="6"] {
+    text-align: left; /* 내용은 왼쪽 정렬 */
+    color: #333;
+    font-size: 1rem;
+    padding: 15px 20px; /* 위아래 10px, 좌우 15px 공백 */
+}
+
+.notice-board-table-content {
+    height: 500px;
+    min-height: 500px; /* 최소 높이 */
+    max-height: none; /* 최대 높이 제한 없음 */
 }
 
 .notice-board-table td {
     color: #333;
-    width: 35%;
+    width: 25%;
 }
 
-/* 첫 번째 열(제목 및 내용) colspan 조정 */
-.notice-board-table td[colspan="3"] {
-    width: 85%; /* 내용이 차지하는 비율 */
-}
 
 /* 버튼 스타일 */
 .notice-actions .edit-notice-btn,
@@ -164,25 +204,192 @@
     text-decoration: none;
     border-radius: 5px;
     font-size: 14px;
-}
-
-.edit-notice-btn {
-    background-color: #4CAF50;
-    color: #fff;
-}
-
-.delete-notice-btn {
-    background-color: #f44336;
-    color: #fff;
-}
-
-.back-btn {
     background-color: #555;
     color: #fff;
+}
+
+.notice-actions {
+    text-align: right;
+    padding: 10px 20px;
 }
 
 .notice-actions .edit-notice-btn:hover,
 .notice-actions .delete-notice-btn:hover,
 .back-to-list .back-btn:hover {
     opacity: 0.8;
+}
+
+/* ---------------Write-------------------- */
+/* 공지사항 작성 폼 */
+.notice-write-form table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+.notice-write-form th,
+.notice-write-form td {
+    padding: 12px 15px;
+    border-bottom: 1px solid #ddd;
+    vertical-align: top;
+}
+
+.notice-write-form th {
+    background-color: #f9f9f9;
+    font-weight: bold;
+    text-align: left;
+    width: 10%;
+    color: #555;
+}
+
+.notice-write-form td {
+    color: #333;
+}
+
+/* 입력 필드 스타일 */
+.input-title, .input-writer, .textarea-content {
+    width: 100%;
+    padding: 10px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.textarea-content {
+    height: 200px;
+    resize: none;
+}
+
+/* 버튼 스타일 */
+.notice-actions {
+    margin-top: 20px;
+    text-align: right;
+}
+
+.submit-btn, .cancel-btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 14px;
+    cursor: pointer;
+    text-decoration: none;
+    color: #fff;
+    margin-left: 10px;
+}
+
+.submit-btn {
+    background-color: #4CAF50;
+}
+
+.cancel-btn {
+    background-color: #555;
+}
+
+.submit-btn:hover, .cancel-btn:hover {
+    opacity: 0.8;
+}
+
+/* --------------------------- 게시판 댓글 ------------------------------- */
+/* 댓글 섹션 스타일 */
+.comments-section {
+     max-width: 900px;
+     margin: 0 auto;
+    margin-top: 20px;
+     padding: 20px;
+     background-color: #fff;
+     border-radius: 8px;
+     box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+.comments-section h2 {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+/*댓글 목록 스타일*/
+.comments-list {
+    margin-bottom: 20px;
+    list-style-type: none;
+    padding: 0;
+}
+
+.comments-list ul {
+    margin: 0;
+    padding: 0;
+    list-style-type: none; /* li 점 제거 */
+}
+
+.comments-list li {
+    list-style-type: none; /* li 점 제거 */
+    margin-bottom: 15px;
+    padding: 10px;
+    border: 1px solid #e0e0e0;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+}
+
+/* 댓글 작성자와 작성일 */
+.comments-list li .comment-meta {
+    display: flex;
+    margin-bottom: 10px;
+    margin-left: 10px;
+    font-size: 0.9rem;
+    color: #777;
+    text-align: left; /* 작성일 왼쪽 정렬 */
+}
+
+.comments-list li .comment-meta strong {
+    font-weight: bold;
+    color: #333;
+    margin-right: 20px;
+}
+
+.comments-list li .comment-meta span {
+    font-style: italic;
+    margin-top: 2px;
+}
+
+/* 댓글 내용 */
+.comments-list li .comment-content {
+    font-size: 1rem;
+    line-height: 1.5;
+    margin-left: 10px;
+    color: #444;
+    white-space: pre-wrap; /* 줄바꿈 및 공백 유지 */
+    text-align: left; /* 댓글 내용 왼쪽 정렬 */
+}
+
+/* 댓글 작성 폼 */
+.comment-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.comment-form textarea {
+    resize: none;
+    width: 100%;
+    height: 80px;
+    margin-bottom: 10px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1rem;
+    font-family: Arial, sans-serif;
+}
+
+.comment-form button {
+    align-self: flex-end;
+    padding: 8px 16px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+.comment-form button:hover {
+    background-color: #0056b3;
 }

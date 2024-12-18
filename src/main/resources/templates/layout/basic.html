@@ -10,11 +10,11 @@
 
 <!-- Navigation Bar -->
 <div class="navbar">
-    <div class="logo">편Easy</div>
+    <div class="logo">이지펴니</div>
     <ul class="menu">
         <li><a href="/" th:classappend="${#httpServletRequest.requestURI == '/home'} ? 'active'">홈</a></li>
-        <li><a href="/about" th:classappend="${#httpServletRequest.requestURI == '/about'} ? 'active'">검색</a></li>
-        <li><a href="/contact" th:classappend="${#httpServletRequest.requestURI == '/contact'} ? 'active'">커뮤니티</a></li>
+        <li><a href="/search" th:classappend="${#httpServletRequest.requestURI == '/search'} ? 'active'">검색</a></li>
+        <li><a href="/board" th:classappend="${#httpServletRequest.requestURI == '/board'} ? 'active'">커뮤니티</a></li>
         <li><a href="/notice" th:classappend="${#httpServletRequest.requestURI == '/notice'} ? 'active'">공지사항</a></li>
         <li><a href="/services" th:classappend="${#httpServletRequest.requestURI == '/services'} ? 'active'">고객센터</a></li>
     </ul>

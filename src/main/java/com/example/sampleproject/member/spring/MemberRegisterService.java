@@ -18,14 +18,24 @@ public class MemberRegisterService {
 	}
 
 	public Long regist(SignupCommand req) {
-		Members members = memberDao.selectByEmail(req.getEmail());
-		if (members != null) {
-			throw new DuplicateMemberException("dup email " + req.getEmail());
+		// 이메일 중복 확인
+		Members existingMemberByEmail = memberDao.selectByEmail(req.getEmail());
+		if (existingMemberByEmail != null) {
+			throw new DuplicateMemberException("중복된 이메일: " + req.getEmail());
 		}
+
+		// 이름 중복 확인
+		Members existingMemberByName = memberDao.selectByName(req.getName());
+		if (existingMemberByName != null) {
+			throw new DuplicateMemberException("중복된 이름: " + req.getName());
+		}
+
+		// 새로운 사용자 등록
 		Members newMember = new Members(
 				req.getEmail(), req.getName(), req.getPassword(),
 				LocalDateTime.now());
 		memberDao.insert(newMember);
 		return newMember.getId();
 	}
+
 }

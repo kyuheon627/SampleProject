@@ -39,6 +39,27 @@ public class MemberDao {
 				}
 			};
 
+	public Members selectByName(String name) {
+		List<Members> results = jdbcTemplate.query(
+				"select * from MEMBERS where NAME = ?",
+				new RowMapper<Members>() {
+					@Override
+					public Members mapRow(ResultSet rs, int rowNum) throws SQLException {
+						Members members = new Members(
+								rs.getString("EMAIL"),
+								rs.getString("PASSWORD"),
+								rs.getString("NAME"),
+								rs.getString("ROLE"),
+								rs.getTimestamp("REGDATE").toLocalDateTime());
+						members.setId(rs.getLong("ID"));
+						return members;
+					}
+				}, name);
+
+		return results.isEmpty() ? null : results.get(0);
+	}
+
+
 	public Members selectByEmail(String email) {
 		List<Members> results = jdbcTemplate.query(
 				"select * from MEMBERS where EMAIL = ?",

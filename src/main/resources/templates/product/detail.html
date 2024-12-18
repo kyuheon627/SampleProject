@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/basic}">
+<head>
+  <meta charset="UTF-8">
+  <title th:text="'상품 상세 - ' + ${product.name}">상품 상세</title>
+  <link rel="stylesheet" href="/css/productDetailStyle.css">
+</head>
+<body>
+<div layout:fragment="content">
+  <div class="product-detail-container">
+    <img th:src="${product.imageUrl}" th:alt="${product.name}" class="product-image" />
+    <h1 th:text="${product.name}" class="product-name">상품명</h1>
+    <p th:text="'카테고리: ' + ${product.category}" class="product-category">카테고리</p>
+    <p th:text="'가격: ' + ${product.price} + '원'" class="product-price">가격</p>
+    <p th:text="'행사: ' + ${product.event}" class="product-event">행사</p>
+    <p th:text="'재고량: ' + ${product.stockAmount} + '개'" class="product-stock">재고량</p>
+    <a href="/search" class="back-button">목록으로 돌아가기</a>
+  </div>
+
+  <div class="reviews-container">
+    <h2>리뷰</h2>
+
+    <!-- 리뷰 목록 -->
+    <div th:each="review : ${reviews}" class="review-item">
+      <p><strong th:text="${review.reviewer}"></strong></p>
+      <p th:text="${review.content}"></p>
+      <p class="review-date" th:text="${#temporals.format(review.createdAt, 'yyyy-MM-dd HH:mm')}"></p>
+    </div>
+
+    <!-- 리뷰 작성 -->
+    <form th:action="@{/product/review}" method="post" class="review-form">
+      <input type="hidden" name="productId" th:value="${product.id}">
+      <div>
+        <label for="content">리뷰:</label>
+        <textarea id="content" name="content" required></textarea>
+      </div>
+      <button type="submit">리뷰 작성</button>
+    </form>
+
+</div>
+</body>
+</html>

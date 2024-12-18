@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/basic}">
+<head>
+  <meta charset="UTF-8">
+  <title>검색 결과</title>
+  <link rel="stylesheet" href="/css/searchStyle.css"> <!-- searchStyle.css 연결 -->
+</head>
+<body>
+
+  <div layout:fragment="content">
+
+    <!-- 서브 네비게이션 (카테고리 필터) -->
+    <div class="sub-navbar">
+      <ul class="sub-nav-list">
+        <li th:each="cat : ${categories}" th:classappend="${cat == category || (cat == '전체' && category == null)} ? 'active'">
+          <a th:href="@{/search(category=${cat == '전체' ? '' : cat}, event=${event}, query='')}" th:text="${cat}" class="category-link"></a>
+        </li>
+      </ul>
+    </div>
+
+    <!-- 서브 네비게이션 (이벤트 필터) -->
+    <div class="sub-navbar">
+      <ul class="sub-nav-list">
+        <li th:each="eventType : ${eventTypes}" th:classappend="${eventType == event || (eventType == '전체' && event == null)} ? 'active'">
+          <a th:href="@{/search(category=${category}, event=${eventType == '전체' ? '' : eventType}, query='')}" th:text="${eventType}" class="event-link"></a>
+        </li>
+      </ul>
+    </div>
+
+    <!-- 검색창 -->
+    <div class="search-bar-container">
+      <form th:action="@{/search}" method="get" id="searchForm">
+        <input type="text" name="query" class="search-input" placeholder="검색어를 입력하세요" th:value="${query}">
+        <input type="hidden" name="category" id="categoryInput" th:value="${category}">
+        <input type="hidden" name="event" id="eventInput" th:value="${event}">
+        <button type="submit" class="search-button">검색</button>
+      </form>
+    </div>
+
+    <div class="search-results-container">
+
+      <h2 class="search-title">
+        검색 결과 <span th:text="'(' + ${totalProducts} + '개)'"></span>
+      </h2>
+
+      <div class="product-grid">
+        <a th:href="@{/product(id=${product.id})}" class="product-card" th:each="product : ${products}">
+          <p th:text="${product.event}"
+             th:classappend="${product.event == '1+1'} ? 'product-event one-plus-one' : (${product.event == '2+1'} ? 'product-event two-plus-one' : 'product-event')">
+          </p>
+          <img th:src="${product.imageUrl}" th:alt="${product.name}" class="product-image" loading="lazy" />
+          <h3 th:text="${product.name}" class="product-name">상품명</h3>
+          <p th:text="'가격: ' + ${product.price} + '원'" class="product-price">가격</p>
+        </a>
+      </div>
+    </div>
+
+    <!-- 페이징 네비게이션 -->
+    <div th:if="${!products.isEmpty()}">
+      <nav
+              th:with="pageNumber = ${products.pageable.pageNumber},
+                   totalPages = ${products.totalPages},
+                   blockSize = 10,
+                   startPage = ${(pageNumber / blockSize) * blockSize + 1},
+                   tempEndPage = ${startPage + blockSize - 1},
+                   endPage = (${tempEndPage < totalPages ? tempEndPage : totalPages})"
+              aria-label="Page navigation">
+        <ul class="pagination">
+          <!-- 처음으로 이동 -->
+          <li th:classappend="${pageNumber == 0} ? 'disabled'" class="page-item">
+            <a class="page-link" th:href="@{/search(query=${query}, category=${category}, page=0)}">&laquo;</a>
+          </li>
+
+          <!-- 이전 블록으로 이동 -->
+          <li th:classappend="${startPage == 1} ? 'disabled'" class="page-item">
+            <a class="page-link" th:href="${startPage == 1} ? '#' : @{/search(query=${query}, category=${category}, page=${startPage - 2})}">&lt;</a>
+          </li>
+
+          <!-- 특정 페이지로 이동 -->
+          <li th:each="page : ${#numbers.sequence(startPage, endPage)}"
+              th:classappend="${page == pageNumber + 1} ? 'active'" class="page-item">
+            <a class="page-link"
+               th:text="${page}"
+               th:href="@{/search(query=${query}, category=${category}, page=${page - 1})}"></a>
+          </li>
+
+          <!-- 다음 블록으로 이동 -->
+          <li th:classappend="${endPage >= totalPages} ? 'disabled'" class="page-item">
+            <a class="page-link" th:href="${endPage >= totalPages} ? '#' : @{/search(query=${query}, category=${category}, page=${endPage})}">&gt;</a>
+          </li>
+
+          <!-- 마지막으로 이동 -->
+          <li th:classappend="${pageNumber + 1 >= totalPages} ? 'disabled'" class="page-item">
+            <a class="page-link" th:href="@{/search(query=${query}, category=${category}, page=${totalPages - 1})}">&raquo;</a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+
+  <!-- 검색 결과가 없을 경우 -->
+  <p th:if="${products.isEmpty()}" class="no-results">검색 결과가 없습니다.</p>
+</div>
+</body>
+<script src="/js/searchScript.js"></script>
+</html>

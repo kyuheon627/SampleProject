@@ -2,35 +2,40 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/basic}">
 <head>
     <meta charset="UTF-8">
-    <title>공지사항 목록</title>
-    <link rel="stylesheet" href="/css/noticeStyle.css"> <!-- noticeStyle.css 연결 -->
+    <title>게시판 목록</title>
+    <link rel="stylesheet" href="/css/noticeStyle.css"> <!-- 기존 noticeStyle.css 사용 -->
 </head>
 <div layout:fragment="content">
     <div class="notice-list-container">
-        <h2>공지사항 목록</h2>
+        <h2>게시판 목록</h2>
 
-        <!-- 공지사항 작성 버튼 (role이 admin일 때만 표시) -->
-        <div class="button-container" th:if="${role == 'admin'}">
-            <a href="/notice/write" class="write-notice-btn">공지사항 작성</a>
+        <!-- 게시글 작성 버튼 -->
+        <div class="button-container">
+            <a href="/board/write" class="write-notice-btn">게시글 작성</a>
         </div>
 
         <table class="notice-table">
             <thead>
             <tr>
-                <th style="width: 10%;">글 번호</th>
+                <th style="width: 10%;">번호</th>
                 <th style="width: 50%; padding-right: 150px;">제목</th>
                 <th style="width: 15%;">작성자</th>
-                <th style="width: 15%;">작성일자</th>
+                <th style="width: 15%;">작성일</th>
                 <th style="width: 10%;">조회수</th>
             </tr>
             </thead>
             <tbody>
-            <tr th:each="notice : ${list}">
-                <td style="width: 10%; text-align: center;" th:text="${notice.notice_id}">1</td>
-                <td style="width: 50%; padding-left: 30px;"><a th:href="@{/notice/detail(id=${notice.notice_id})}" th:text="${notice.notice_title}">공지사항 제목</a></td>
-                <td style="width: 15%; text-align: center;" th:text="${notice.notice_writer}">작성자 이름</td>
-                <td style="width: 15%; text-align: center;" th:text="${#temporals.format(notice.notice_regdate, 'yyyy.MM.dd')}">작성일</td>
-                <td style="width: 10%; text-align: center;" th:text="${notice.hitcnt}">0</td>
+            <tr th:each="board : ${list.content}">
+                <td style="width: 10%; text-align: center;" th:text="${board.board_id}">1</td>
+                <td style="width: 50%; padding-left: 30px;">
+                    <a th:href="@{/board/detail(id=${board.board_id})}">
+                        <span th:text="${board.board_title}"></span>
+                        <span th:if="${board.comment_count > 0}" th:text="'(' + ${board.comment_count} + ')'"></span>
+                    </a>
+                </td>
+                <td style="width: 15%; text-align: center;" th:text="${board.board_writer}">작성자</td>
+                <td style="width: 15%; text-align: center;" th:text="${#temporals.format(board.board_created, 'yyyy.MM.dd')}">2024.11.22</td>
+                <td style="width: 10%; text-align: center;" th:text="${board.hitcnt}">0</td>
             </tr>
             </tbody>
         </table>
@@ -50,27 +55,27 @@
                 <ul class="pagination">
                     <!-- 처음으로 이동 -->
                     <li th:classappend="${pageNumber == 0} ? 'disabled'" class="page-item">
-                        <a class="page-link" th:href="@{/notice(page=0)}">&laquo;</a>
+                        <a class="page-link" th:href="@{/board(page=0)}">&laquo;</a>
                     </li>
 
                     <!-- 이전으로 이동 -->
                     <li th:classappend="${list.first} ? 'disabled'" class="page-item">
-                        <a class="page-link" th:href="${list.first} ? '#' : @{/notice(page=${pageNumber - 1})}">&lt;</a>
+                        <a class="page-link" th:href="${list.first} ? '#' : @{/board(page=${pageNumber - 1})}">&lt;</a>
                     </li>
 
                     <!-- 특정 페이지로 이동 -->
                     <li th:each="page : ${#numbers.sequence(startPage, endPage)}" th:classappend="${page == pageNumber + 1} ? 'active'" class="page-item">
-                        <a class="page-link" th:text="${page}" th:href="@{/notice(page=${page - 1})}"></a>
+                        <a class="page-link" th:text="${page}" th:href="@{/board(page=${page - 1})}"></a>
                     </li>
 
                     <!-- 다음으로 이동 -->
                     <li th:classappend="${list.last} ? 'disabled'" class="page-item">
-                        <a class="page-link" th:href="${list.last} ? '#' : @{/notice(page=${pageNumber + 1})}">&gt;</a>
+                        <a class="page-link" th:href="${list.last} ? '#' : @{/board(page=${pageNumber + 1})}">&gt;</a>
                     </li>
 
                     <!-- 마지막으로 이동 -->
                     <li th:classappend="${pageNumber + 1 >= totalPages} ? 'disabled'" class="page-item">
-                        <a class="page-link" th:href="@{/notice(page=${totalPages - 1})}">&raquo;</a>
+                        <a class="page-link" th:href="@{/board(page=${totalPages - 1})}">&raquo;</a>
                     </li>
                 </ul>
             </nav>
@@ -79,5 +84,5 @@
 
     </div>
 </div>
-<script src="/js/noticeScript.js"></script> <!-- noticeScript.js 연결 -->
+<script src="/js/noticeScript.js"></script> <!-- 기존 noticeScript.js 사용 -->
 </html>

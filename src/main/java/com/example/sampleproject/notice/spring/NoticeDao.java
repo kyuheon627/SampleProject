@@ -1,6 +1,5 @@
 package com.example.sampleproject.notice.spring;
 
-import com.example.sampleproject.item.entity.Items;
 import com.example.sampleproject.notice.entity.Notices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -15,6 +14,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -30,7 +30,7 @@ public class NoticeDao {
 
     // 페이징 처리를 위한 공지사항 조회 메서드
     public List<Notices> findNoticesWithPaging(int offset, int pageSize) {
-        String sql = "SELECT * FROM notices ORDER BY notice_regdate DESC LIMIT ? OFFSET ?";
+        String sql = "SELECT * FROM notices ORDER BY notice_id DESC LIMIT ? OFFSET ?";
         return jdbcTemplate.query(sql, new Object[]{pageSize, offset}, noticeRowMapper());
     }
 
@@ -55,15 +55,15 @@ public class NoticeDao {
 
                 // 파라미터로 전달받은 Connection을 이용해서 PreparedStatement 생성
                 PreparedStatement pstmt = con.prepareStatement(
-                        "insert into NOTICES (notice_title, notice_content, notice_writer, notice_regdate) " +
-                                "values (?, ?, ?, ?)",
+                        "insert into NOTICES (notice_title, notice_content, notice_writer, hitcnt, notice_regdate) " +
+                                "values (?, ?, ?, ?, ?)",
                         new String[] { "ITEM_ID" });
                 // 인덱스 파라미터 값 설정
                 pstmt.setString(1, notices.getNotice_title());
                 pstmt.setString(2, notices.getNotice_content());
                 pstmt.setString(3, notices.getNotice_writer());
-                pstmt.setTimestamp(4,
-                        Timestamp.valueOf(notices.getNotice_regdate()));
+                pstmt.setInt(4, 0);
+                pstmt.setTimestamp(5, Timestamp.valueOf(LocalDateTime.now()));
                 // 생성한 PreparedStatement 객체 리턴
                 return pstmt;
             }
@@ -72,12 +72,26 @@ public class NoticeDao {
         notices.setNotice_id(keyValue.longValue());
     }
 
+    // 공지사항 수정
+    public void updateNotice(Notices notice) {
+        String sql = "UPDATE notices SET notice_title = ?, notice_content = ?, notice_writer = ?, hitcnt = ? WHERE notice_id = ?";
+        jdbcTemplate.update(sql, notice.getNotice_title(), notice.getNotice_content(), notice.getNotice_writer(),
+                notice.getHitcnt(), notice.getNotice_id());
+    }
+
+    // 특정 공지사항 삭제
+    public void deleteNotice(Long notice_id) {
+        String sql = "DELETE FROM notices WHERE notice_id = ?";
+        jdbcTemplate.update(sql, notice_id);
+    }
+
     private RowMapper<Notices> noticeRowMapper() {
         return (rs, rowNum) -> Notices.builder()
                 .notice_id(rs.getLong("notice_id"))
                 .notice_title(rs.getString("notice_title"))
                 .notice_content(rs.getString("notice_content"))
                 .notice_writer(rs.getString("notice_writer"))
+                .hitcnt(rs.getInt("hitcnt"))
                 .notice_regdate(rs.getTimestamp("notice_regdate").toLocalDateTime())
                 .build();
     }

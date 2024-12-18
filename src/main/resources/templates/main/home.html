@@ -9,51 +9,92 @@
   <h2>상품 목록</h2>
 
   <!-- 검색창 -->
-  <form th:action="@{/search}" method="get" class="search-form">
-    <input type="text" name="query" placeholder="검색어를 입력하세요" />
-    <button type="submit">검색</button>
-  </form>
+  <div class="search-bar-container">
+    <form th:action="@{/search}" method="get" id="searchForm">
+      <input type="text" name="query" class="search-input" placeholder="검색어를 입력하세요" th:value="${query}">
+      <input type="hidden" name="category" id="categoryInput" th:value="${category}">
+      <input type="hidden" name="event" id="eventInput" th:value="${event}">
+      <button type="submit" class="search-button">검색</button>
+    </form>
+  </div>
 
   <!-- 분류 검색 항목 -->
   <div class="category-grid">
-    <a href="/category/food" class="category-item">
+    <a href="/search?category=식품" class="category-item">
       <img src="/images/food.jpg" alt="식품">
       <span>식품</span>
     </a>
-    <a href="/category/drinks" class="category-item">
+    <a href="/search?category=음료" class="category-item">
       <img src="/images/drinks.jpg" alt="음료">
       <span>음료</span>
     </a>
-    <a href="/category/snacks" class="category-item">
+    <a href="/search?category=과자" class="category-item">
       <img src="/images/snacks.jpg" alt="과자">
       <span>과자</span>
     </a>
-    <a href="/category/icecream" class="category-item">
+    <a href="/search?category=아이스크림" class="category-item">
       <img src="/images/icecream.jpg" alt="아이스크림">
       <span>아이스크림</span>
     </a>
-    <a href="/category/alcohol" class="category-item">
-      <img src="/images/alcohol.jpg" alt="주류">
-      <span>주류</span>
-    </a>
-    <a href="/category/daily" class="category-item">
+    <a href="/search?category=생활용품" class="category-item">
       <img src="/images/daily.jpg" alt="생활용품">
       <span>생활용품</span>
     </a>
+    <a href="javascript:void(0);" class="category-item disabled">
+      <img src="/images/alcohol.jpg" alt="주류">
+      <span>주류</span>
+      <div class="disabled-overlay">X</div>
+    </a>
   </div>
 
-  <!-- 공지사항 -->
-  <div class="main-page-notice">
-    <h3>
-      <a href="/notice">공지사항</a>
-    </h3>
-    <div class="main-page-split"></div>
-    <table>
-      <tr th:each="notice : ${list}">
-        <td><a th:href="@{/detail(seq=${notice.seq})}">[[${notice.title}]]</a></td>
-        <td th:text="${#temporals.format(notice.regdate, 'yyyy.MM.dd')}"></td>
-      </tr>
-    </table>
+  <!-- 공지사항 및 게시판 -->
+  <div class="main-page-lists">
+    <!-- 공지사항 -->
+    <div class="notice-section">
+      <h3>공지사항</h3>
+      <table class="mini-table">
+        <thead>
+        <tr>
+          <th style="width: 70%;">제목</th>
+          <th style="width: 30%;">작성일</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="notice : ${notices}">
+          <td><a th:href="@{/notice/detail(id=${notice.notice_id})}" th:text="${notice.notice_title}"></a></td>
+          <td th:text="${#temporals.format(notice.notice_regdate, 'yyyy.MM.dd')}"></td>
+        </tr>
+        </tbody>
+      </table>
+      <div class="more-link-container">
+        <a href="/notice" class="more-link">더보기</a>
+      </div>
+    </div>
+
+    <!-- 게시판 -->
+    <div class="board-section">
+      <h3>게시판</h3>
+      <table class="mini-table">
+        <thead>
+        <tr>
+          <th style="width: 70%;">제목</th>
+          <th style="width: 30%;">작성일</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="board : ${boards}">
+          <td>
+            <a th:href="@{/board/detail(id=${board.board_id})}" th:text="${board.board_title}"></a>
+            <span th:if="${board.comment_count > 0}" th:text="'(' + ${board.comment_count} + ')'"></span>
+          </td>
+          <td th:text="${#temporals.format(board.board_created, 'yyyy.MM.dd')}"></td>
+        </tr>
+        </tbody>
+      </table>
+      <div class="more-link-container">
+        <a href="/board" class="more-link">더보기</a>
+      </div>
+    </div>
   </div>
 
 </div>

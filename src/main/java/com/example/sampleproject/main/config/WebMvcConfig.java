@@ -13,7 +13,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(new AuthCheckInterceptor())
                 .addPathPatterns("/**") // 인증이 필요한 경로 설정
-                .excludePathPatterns("/login", "/signup", "/css/**", "/js/**", "/", "/images/**", "/notice/**"); // 로그인 및 회원가입 페이지는 제외
+                .excludePathPatterns("/login", "/signup", "/css/**", "/js/**", "/cvs/**", "/", "/images/**", "/notice/**", "/board/**", "/search/**", "/product/**"); // 로그인 및 회원가입 페이지는 제외
     }
 
     @Override
